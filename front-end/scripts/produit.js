@@ -75,25 +75,10 @@ function ajouterProduit() {
       
     // Si le storage existe, on récupère son contenu qu'on ajoute au tableauProduits, et on le renvoie complété dans le LS
     if (localStorage.getItem("produits") !== null) {
-    	let tableauProd_json = localStorage.getItem("produits");
-		tableauProduits = JSON.parse(tableauProd_json);
+		let tableauProduits = JSON.parse(localStorage.getItem("produits"));
 
     	// On lance la fonction pour voir si le meuble sélectionné existe déjà dans le LS et faire les modifs nécessaires
-    	objetExistant();
-
-    } else { // Si le LS est vide, on ajoute un nouvel objet
-    	tableauProduits.push(produitAjoute);
-    	localStorage.setItem("produits", JSON.stringify(tableauProduits));
-    } 
-    // 0n confirme l'ajout au panier - durée affichage 5 secondes
-	messagePanier.innerHTML = `Vous avez bien ajouté ${quantiteProduit.value} meuble(s) à votre panier!`;
-	setTimeout(function() {
-			messagePanier.innerHTML = "";
-	},5000);
-}			
-
-function objetExistant(){
-	let produitExistant = tableauProduits.find(item => item.id === id);
+    	let produitExistant = tableauProduits.find(item => item.id === id);
     	if(produitExistant) {
     		tableauProduits = tableauProduits.map(function(item) {	//on regarde chaque item du tableau
     			if(item.id === id) { // Si l'objet est déjà existant dans le LS (on compare les ID)
@@ -107,9 +92,19 @@ function objetExistant(){
     	} else {// Si le produit n'est pas déjà présent dans le LS (ID)
     		// On ajouteun nouvel objet dans le LS  
     		tableauProduits.push(produitAjoute);
-    		tableauProd_json = JSON.stringify(tableauProduits);
     		localStorage.setItem("produits", JSON.stringify(tableauProduits));
     	}
-}
+    } else { // Si le LS est vide, on ajoute un nouvel objet
+    	tableauProduits.push(produitAjoute);
+    	localStorage.setItem("produits", JSON.stringify(tableauProduits));
+    } 
+    // 0n confirme l'ajout au panier - durée affichage 5 secondes
+	messagePanier.innerHTML = `Vous avez bien ajouté ${quantiteProduit.value} meuble(s) à votre panier!`;
+	setTimeout(function() {
+			messagePanier.innerHTML = "";
+	},5000);
+}			
+
+
 
 
