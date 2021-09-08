@@ -1,0 +1,249 @@
+@charset "UTF-8";
+/* ----------SOMMAIRE---------- */
+/* L		- 1 - */
+/* L		- 2 - */
+/* L		- 3 - */
+/* VARIABLES */
+/* MIXINS */
+/* KEYFRAMES */
+/* ELEMENTS GENERAUX */
+.page__entiere {
+  padding: 0;
+  max-width: 3000px;
+  font-family: "Roboto Condensed", sans-serif;
+}
+
+main {
+  margin: 0 0 40px 0;
+}
+
+section {
+  margin: 40px 5%;
+}
+
+h2, legend {
+  font-weight: 300;
+}
+
+a {
+  color: black;
+  text-decoration: none;
+}
+a:hover {
+  color: #ba7894;
+}
+
+ul {
+  list-style-type: none;
+  padding: 40;
+}
+
+button, input, select {
+  border: 2px solid #F1ECF0;
+  border-radius: 4px;
+}
+
+.btn-sm {
+  background-color: #F1ECF0;
+  border: 2px solid #ba7894;
+  color: #ba7894;
+  font-size: 1rem;
+  font-weight: bold;
+}
+.btn-sm:hover {
+  background-color: #d1c0cd;
+}
+
+label {
+  display: inline;
+}
+
+.text-underline {
+  text-decoration: underline;
+}
+
+.text-bold {
+  font-weight: bold;
+}
+
+/* HEADER - NAVIGATION */
+.navbar {
+  padding: 0;
+}
+.navbar-brand {
+  padding: 0;
+}
+.navbar-brand img {
+  max-width: 130px;
+  position: relative;
+  right: 12px;
+}
+.navbar-expand-lg .navbar-collapse {
+  justify-content: flex-end;
+}
+.navbar .nav-item {
+  line-height: 3;
+}
+.navbar .nav-item .nav-link, .navbar .nav-item .nav-link:focus {
+  color: #ba7894;
+}
+.navbar .nav-item .nav-link:hover {
+  color: #8e5bfb;
+}
+
+.banniere {
+  background-color: #f4e6d9;
+}
+.banniere__presentation {
+  padding: 90px 5%;
+}
+
+/********* PAGE PRESENTATION DES PRODUITS (INDEX) ***********/
+.articles {
+  display: flex;
+  flex-wrap: wrap;
+}
+.articles .card {
+  width: 18rem;
+  margin: 40px 10px;
+}
+.articles .card .lien-article:hover {
+  color: black;
+  cursor: auto;
+}
+.articles .div-image {
+  height: 200px;
+}
+.articles .div-image__img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: 50% 10%;
+}
+.articles .infos-produit__nom {
+  font-weight: bold;
+}
+.articles .infos-produit__prix {
+  font-style: italic;
+}
+
+/********* PAGE PRODUIT ***********/
+.prix-produit {
+  font-style: italic;
+  font-size: 2rem;
+}
+.prix-produit + .card {
+  max-width: 800px;
+  margin: auto;
+  text-align: justify;
+}
+.prix-produit + .card button {
+  width: 50%;
+  margin: auto;
+}
+
+.boutonsLiens {
+  max-width: 800px;
+  margin: auto;
+  display: flex;
+  justify-content: space-around;
+}
+
+/*********  PAGE PANIER *********/
+.blocPanier {
+  width: 90%;
+  margin: auto;
+}
+.blocPanier form fieldset {
+  border: 2px groove #ba7894;
+  border-radius: 10px;
+}
+.blocPanier form legend {
+  float: none;
+  width: auto;
+  padding: 0 0.2em;
+}
+.blocPanier form #mlle, .blocPanier form #mr {
+  margin-left: 2em;
+}
+.blocPanier #validation, .blocPanier #checkbox, .blocPanier button {
+  cursor: pointer;
+}
+.blocPanier .boutons {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 2em;
+}
+
+/* FOOTER */
+.footer {
+  padding: 10px 10%;
+  background: #F1ECF0;
+}
+.footer a:hover {
+  color: #8e5bfb;
+}
+.footer__social {
+  font-size: 5rem;
+  display: flex;
+  justify-content: space-between;
+  margin: auto;
+  padding-top: 10px;
+}
+.footer__social .fab {
+  -webkit-background-clip: text;
+  -moz-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-image: linear-gradient(to right, #c77960, #8e5bfb);
+}
+.footer__liens h2 {
+  margin-top: 2em;
+}
+.footer__liens ul {
+  padding: 0;
+  text-align: center;
+}
+.footer__liens li {
+  font-size: 0.9em;
+  margin-bottom: 1em;
+}
+
+/* MEDIA QUERIES */
+@media screen and (min-width: 768px) {
+  /* Produit */
+  .prixProduit .divImage {
+    height: 600px;
+  }
+  .prixProduit .divImage__img {
+    max-height: 100%;
+    object-fit: contain;
+  }
+
+  /* Panier */
+  .m-left {
+    margin-left: 1em;
+  }
+
+  .nomPrenom, .cpVille {
+    display: flex;
+  }
+
+  /* Footer */
+  /* Le footer est organisé en 3 colonnes au lieu de 3 blocs les uns au dessus des autres  */
+  .footer nav {
+    display: flex;
+    justify-content: space-between;
+  }
+  .footer__social {
+    width: 30%;
+    font-size: 2.5rem;
+  }
+}
+@media screen and (min-width: 1024px) {
+  /* Panier */
+  .blocPanier {
+    width: 50%;
+  }
+}
+
+/*# sourceMappingURL=style.css.map */

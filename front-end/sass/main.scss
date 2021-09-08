@@ -1,0 +1,297 @@
+/* ----------SOMMAIRE---------- */
+
+/* L		- 1 - */
+/* L		- 2 - */
+/* L		- 3 - */
+
+
+
+/* VARIABLES */
+$color1: #ba7894; 
+$color2: #8e5bfb;
+$color3: #F1ECF0;
+$color4: #c77960;
+$color5: #f4e6d9;
+
+
+/* MIXINS */
+
+/* KEYFRAMES */ 
+
+/* ELEMENTS GENERAUX */
+
+
+.page__entiere{
+	padding:  0;
+	max-width: 3000px;
+	font-family: 'Roboto Condensed', sans-serif;
+}
+
+main {
+	margin : 0 0 40px 0;
+}
+
+section {
+	margin : 40px 5%;
+}
+
+
+h2, legend {
+	font-weight: 300;
+}
+
+a {
+	color: black;
+  text-decoration: none;
+  &:hover {
+  	color: $color1;
+  }
+}
+
+ul {
+  list-style-type: none;
+  padding: 40;
+}
+
+button, input, select {
+	border: 2px solid $color3;
+	border-radius: 4px;
+}
+
+.btn-sm {
+	background-color: $color3;
+	border: 2px solid $color1;
+    color: $color1;
+    font-size: 1rem;
+    font-weight: bold;
+	&:hover {
+		background-color: darken($color3,15);
+	}
+
+}
+
+label {
+	display: inline;
+}
+.text-underline {
+	text-decoration: underline;
+}
+
+.text-bold {
+	font-weight: bold;
+}
+
+
+
+/* HEADER - NAVIGATION */
+
+.navbar {
+	padding : 0;
+	&-brand {
+		padding : 0;
+		& img {
+			max-width: 130px;
+			position : relative;
+			right: 12px;
+		}
+	}
+	&-expand-lg .navbar-collapse {
+		justify-content: flex-end;
+	}
+	.nav-item {
+		line-height: 3;
+		.nav-link, .nav-link:focus {
+			color: $color1;
+		}
+		.nav-link:hover {
+			color: $color2;
+		}
+	}
+}
+
+
+.banniere {
+	background-color: $color5; 
+	&__presentation {
+		padding: 90px 5%;
+	}
+}
+
+
+/********* PAGE PRESENTATION DES PRODUITS (INDEX) ***********/
+
+.articles {
+	display: flex;
+	flex-wrap: wrap;
+	.card {
+		width: 18rem;
+		margin: 40px 10px;
+		.lien-article:hover {
+			color: black;
+			cursor: auto;
+		}
+	}
+	.div-image {
+		height: 200px;
+		&__img {
+			width: 100%;
+			height: 100%;
+			object-fit: cover;
+			object-position: 50% 10%;
+		}
+	}
+	.infos-produit__nom {
+		font-weight: bold;
+	}	
+	.infos-produit__prix {
+		font-style: italic;
+	}
+}
+
+
+/********* PAGE PRODUIT ***********/
+.prix-produit {
+	font-style : italic;
+	font-size: 2rem;
+	& + .card {
+		max-width: 800px;
+		margin: auto;
+		text-align: justify;
+		& button {
+			width: 50%;
+			margin: auto;
+		}
+	}
+}
+
+.boutonsLiens{
+	max-width: 800px;
+	margin: auto;
+	display: flex;
+	justify-content: space-around;
+}	
+
+
+
+
+/*********  PAGE PANIER *********/
+
+.blocPanier {
+	width: 90%;
+	margin:  auto;
+	form {
+		fieldset {
+			border: 2px groove $color1;
+			border-radius: 10px;
+		}
+		legend {
+			float : none;
+			width: auto;
+			padding : 0 0.2em;
+		}
+		#mlle, #mr {
+			margin-left: 2em;
+		}
+	}
+	#validation, #checkbox, button {
+		cursor:  pointer;
+	}
+	.boutons {
+		display: flex;
+		justify-content: space-between;
+		margin-top:  2em;
+	}
+}
+
+
+
+
+
+
+
+/* FOOTER */
+
+.footer {
+	padding: 10px 10%;
+    background: $color3;
+    & a:hover {
+    	color:  $color2;
+    }
+    &__social {
+		font-size: 5rem;
+    	display: flex;
+    	justify-content: space-between;
+    	margin: auto;
+    	padding-top: 10px;
+    	.fab {
+			-webkit-background-clip:  text;
+			-moz-background-clip:  text;
+			-webkit-text-fill-color: transparent;
+			background-image: linear-gradient(to right, $color4, $color2) ;
+		}
+	}
+	&__liens {
+		h2 {
+			margin-top: 2em;
+		}
+		ul {
+			padding: 0;
+			text-align: center;
+		}
+		li {
+			font-size: 0.9em;
+			margin-bottom: 1em;
+		}
+	}
+}
+
+    
+
+/* MEDIA QUERIES */
+
+@media screen and (min-width: 768px) 	/* min-width= taille iPad  */ {
+
+	/* Produit */
+	
+	.prixProduit .divImage {
+		height: 600px;
+		&__img {
+			max-height: 100%;
+			object-fit: contain;
+		}
+	}
+
+
+	/* Panier */
+
+	.m-left {
+		margin-left: 1em;
+	}
+
+	.nomPrenom, .cpVille {
+		display: flex;
+	}
+	/* Footer */
+	
+			/* Le footer est organisé en 3 colonnes au lieu de 3 blocs les uns au dessus des autres  */
+	
+	.footer {
+		& nav {
+			display: flex;
+			justify-content: space-between;
+		}
+		&__social {
+			width: 30%;	
+    		font-size: 2.5rem;
+		}
+	}
+} 
+@media screen and (min-width: 1024px) 	/* max-width= taille iPad Pro */ {
+
+	/* Panier */
+	
+	.blocPanier {
+		width: 50%;
+	}
+} 
+
