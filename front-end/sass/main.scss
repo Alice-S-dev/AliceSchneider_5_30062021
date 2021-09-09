@@ -179,6 +179,79 @@ label {
 .blocPanier {
 	width: 90%;
 	margin:  auto;
+	.panier {
+		padding: 0;
+		.panier-item {
+			padding: 1em;
+			border: 2px solid $color1;
+			border-radius: 10px;
+			box-shadow: lightgrey 6px 6px 10px;
+			display: flex;
+			justify-content: space-between;
+			align-items: center;
+			&__img {
+				height: 100px;
+				width: 100px;
+				border: 1px solid grey;
+				border-radius: 5px;
+				img {
+					width: 100%;
+					height: 100%;
+					object-fit: cover;
+					object-position: 50% 10%;
+				}
+			}
+			&__prix-unit, &__prix-total, &__nom {
+				display: flex;
+				align-items: center;
+				padding: 1em;
+			}
+			&__qte {
+				display: flex;
+				flex-direction: column;
+				align-items: center;
+				justify-content: center;
+				padding: 1em;
+				&__input {
+					display: flex;
+					flex-direction: column;
+					align-items: center;
+					input {
+						width: 40px;
+						margin-bottom: 0.5em;
+					}
+				}
+			}
+		}
+		.ligne {
+			width: 1px;
+			height: 100px;
+			background-color: $color1;
+		}
+	}
+	.total {
+    display: flex;
+    flex-direction: row-reverse;
+    justify-content: space-between;
+    align-items: center;
+    padding-left: 10%;
+		&-panier {
+		padding: 1em;
+		background-color: $color3;
+		width: 50%;
+		border-radius: 10px;
+		box-shadow: lightgrey 6px 6px 10px;
+		display: flex;
+		justify-content: space-between;
+			p {
+				margin-bottom: 0;
+				font-size: 2.5em;
+				color: $color1; 
+			}
+		}	
+
+	}
+
 	form {
 		fieldset {
 			border: 2px groove $color1;

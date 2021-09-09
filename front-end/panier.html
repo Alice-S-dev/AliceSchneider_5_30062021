@@ -58,13 +58,70 @@
 
 		<!-- Contenu principal -->
 		<main>
-			<!-- bloc 1 - Contenu du panier -->
+			<!-- bloc 1 - Panier -->
 			<section class="blocPanier">
 				<h1 id="titre" class="text-center mt-5">Mon panier</h1>
 
-				<p class="text-center mt-5">Votre panier est actuellement vide. </p>
+				<p class="text-center mt-5 panier-vide">Votre panier est actuellement vide. </p>
+
+				<!-- Contenu du panier -->
+				<ul class="panier">
+					<li class="panier-item mb-4">
+						<div class="panier-item__img">
+							<img src="" alt="Image du produit - Orinoco">
+						</div>
+
+						<div class="ligne"></div>
+
+						<div class="panier-item__nom">
+							<h2 id="nom-produit" class="m-0">NOM PROD</h2>
+						</div>
+
+						<div class="ligne"></div>
+						
+						<div class="panier-item__prix-unit">
+							<p id="prix-produit" class="m-0">0,00€</p>
+						</div>
+
+						<div class="ligne"></div>
+
+						<div class="panier-item__qte">
+							<div class="panier-item__qte__input">
+								<label for="item-qte">Quantité: </label>
+								<input type="number" name="item-qte" id="item-qte" value="1" min="1" max="20">
+							</div>
+							<div class="panier-item__qte__suppr">
+								<button class="suppr-produit btn-sm">Supprimer</button>
+							</div>
+						</div>
+
+						<div class="ligne"></div>
+
+						<div class="panier-item__prix-total text-bold">
+							<p id="total-produit" class="m-0">0,00€</p>
+						</div>
+						
+					</li>
+				</ul>
+				<!-- Contenu du panier END -->
+
+				<!-- Total panier -->
+				<div class="total mb-3">
+					<div class="total-panier">
+						<p class="total-panier__txt"> TOTAL : </p>
+						<p class="total-panier__prix"> 0,00€</p>
+					</div>
+					<div class="vide-panier">
+						<button class="vide-panier-btn btn-sm "> Vider le panier</button>
+					</div>
+				</div>
+
+				
+				
+				<!-- Total panier END -->
+
 			</section>
-			<!-- bloc 1 - Contenu du panier END-->
+			<!-- bloc 1 - Panier END-->
 
 			<!-- bloc 2 - Infos client -->
 			<section class="blocPanier mt-5" id="formulaire">
