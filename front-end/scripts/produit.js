@@ -63,6 +63,7 @@ function ajouterProduit() {
 	// On crée le produit à ajouter
     let produitAjoute = {
       	nom: nomProduit.innerHTML,
+      	image: image.src,
         prix: parseFloat(prixProduit.innerHTML),
         quantite: parseFloat(quantiteProduit.value),
         id: id,

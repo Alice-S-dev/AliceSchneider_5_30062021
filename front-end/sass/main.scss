@@ -179,6 +179,10 @@ label {
 .blocPanier {
 	width: 90%;
 	margin:  auto;
+	.btn-produits {
+		display: flex; 
+		justify-content: center;
+	}
 	.panier {
 		padding: 0;
 		.panier-item {
@@ -187,31 +191,43 @@ label {
 			border-radius: 10px;
 			box-shadow: lightgrey 6px 6px 10px;
 			display: flex;
+			flex-wrap: wrap;
 			justify-content: space-between;
 			align-items: center;
+			margin: auto;
 			&__img {
 				height: 100px;
 				width: 100px;
-				border: 1px solid grey;
-				border-radius: 5px;
+				min-width: 100px;
 				img {
 					width: 100%;
 					height: 100%;
 					object-fit: cover;
 					object-position: 50% 10%;
+					border-radius:5px;
 				}
 			}
-			&__prix-unit, &__prix-total, &__nom {
+			&__prix-unit, &__prix-total, &__nom, &__qte {
 				display: flex;
 				align-items: center;
 				padding: 1em;
 			}
+			&__prix-unit, &__prix-total{
+				width: 10%;
+				min-width: 70px;
+			}
+			&__nom {
+				width: 20%;
+				min-width: 100px;
+				h2 {
+					font-size: 1.2rem;
+				}
+			}
 			&__qte {
-				display: flex;
 				flex-direction: column;
-				align-items: center;
 				justify-content: center;
-				padding: 1em;
+				width: 20%;
+				min-width: 90px;
 				&__input {
 					display: flex;
 					flex-direction: column;
@@ -231,14 +247,19 @@ label {
 	}
 	.total {
     display: flex;
+    flex-wrap: wrap;
     flex-direction: row-reverse;
     justify-content: space-between;
     align-items: center;
-    padding-left: 10%;
+    height: 200px;
+    &-panier, .vide-panier, .btn-poursuivre {
+    	margin: auto;
+    }
 		&-panier {
 		padding: 1em;
 		background-color: $color3;
-		width: 50%;
+    width: 100%;
+		min-width: 50%;
 		border-radius: 10px;
 		box-shadow: lightgrey 6px 6px 10px;
 		display: flex;
@@ -271,6 +292,7 @@ label {
 	}
 	.boutons {
 		display: flex;
+		flex-direction: row-reverse;
 		justify-content: space-between;
 		margin-top:  2em;
 	}
@@ -336,6 +358,20 @@ label {
 
 
 	/* Panier */
+	.blocPanier{
+		.total {
+			height: 100px;
+			flex-wrap: nowrap;
+			flex-direction: row;
+			.total-panier {
+			width: 50%;
+			}
+		}
+	}
+
+	#formulaire {
+		width : 70%;
+	}
 
 	.m-left {
 		margin-left: 1em;
@@ -359,12 +395,16 @@ label {
 		}
 	}
 } 
-@media screen and (min-width: 1024px) 	/* max-width= taille iPad Pro */ {
+@media screen and (min-width: 1030px) {
 
 	/* Panier */
 	
 	.blocPanier {
 		width: 50%;
 	}
+
+	#formulaire {
+		width: 50%;
+	} 
 } 
 

@@ -154,6 +154,10 @@ label {
   width: 90%;
   margin: auto;
 }
+.blocPanier .btn-produits {
+  display: flex;
+  justify-content: center;
+}
 .blocPanier .panier {
   padding: 0;
 }
@@ -163,32 +167,44 @@ label {
   border-radius: 10px;
   box-shadow: lightgrey 6px 6px 10px;
   display: flex;
+  flex-wrap: wrap;
   justify-content: space-between;
   align-items: center;
+  margin: auto;
 }
 .blocPanier .panier .panier-item__img {
   height: 100px;
   width: 100px;
-  border: 1px solid grey;
-  border-radius: 5px;
+  min-width: 100px;
 }
 .blocPanier .panier .panier-item__img img {
   width: 100%;
   height: 100%;
   object-fit: cover;
   object-position: 50% 10%;
+  border-radius: 5px;
 }
-.blocPanier .panier .panier-item__prix-unit, .blocPanier .panier .panier-item__prix-total, .blocPanier .panier .panier-item__nom {
+.blocPanier .panier .panier-item__prix-unit, .blocPanier .panier .panier-item__prix-total, .blocPanier .panier .panier-item__nom, .blocPanier .panier .panier-item__qte {
   display: flex;
   align-items: center;
   padding: 1em;
+}
+.blocPanier .panier .panier-item__prix-unit, .blocPanier .panier .panier-item__prix-total {
+  width: 10%;
+  min-width: 70px;
+}
+.blocPanier .panier .panier-item__nom {
+  width: 20%;
+  min-width: 100px;
+}
+.blocPanier .panier .panier-item__nom h2 {
+  font-size: 1.2rem;
 }
 .blocPanier .panier .panier-item__qte {
-  display: flex;
   flex-direction: column;
-  align-items: center;
   justify-content: center;
-  padding: 1em;
+  width: 20%;
+  min-width: 90px;
 }
 .blocPanier .panier .panier-item__qte__input {
   display: flex;
@@ -206,15 +222,20 @@ label {
 }
 .blocPanier .total {
   display: flex;
+  flex-wrap: wrap;
   flex-direction: row-reverse;
   justify-content: space-between;
   align-items: center;
-  padding-left: 10%;
+  height: 200px;
+}
+.blocPanier .total-panier, .blocPanier .total .vide-panier, .blocPanier .total .btn-poursuivre {
+  margin: auto;
 }
 .blocPanier .total-panier {
   padding: 1em;
   background-color: #F1ECF0;
-  width: 50%;
+  width: 100%;
+  min-width: 50%;
   border-radius: 10px;
   box-shadow: lightgrey 6px 6px 10px;
   display: flex;
@@ -242,6 +263,7 @@ label {
 }
 .blocPanier .boutons {
   display: flex;
+  flex-direction: row-reverse;
   justify-content: space-between;
   margin-top: 2em;
 }
@@ -291,6 +313,19 @@ label {
   }
 
   /* Panier */
+  .blocPanier .total {
+    height: 100px;
+    flex-wrap: nowrap;
+    flex-direction: row;
+  }
+  .blocPanier .total .total-panier {
+    width: 50%;
+  }
+
+  #formulaire {
+    width: 70%;
+  }
+
   .m-left {
     margin-left: 1em;
   }
@@ -310,9 +345,13 @@ label {
     font-size: 2.5rem;
   }
 }
-@media screen and (min-width: 1024px) {
+@media screen and (min-width: 1030px) {
   /* Panier */
   .blocPanier {
+    width: 50%;
+  }
+
+  #formulaire {
     width: 50%;
   }
 }
