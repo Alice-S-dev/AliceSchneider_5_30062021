@@ -47,6 +47,8 @@ function btnClick() {
 	    if (quantiteProduit.value >= 1 && quantiteProduit.value <= 20) { //On borne la quantité entre 1 et 20 articles
 		    //Si la quantité est correcte, on lance la fonction pour ajouter notre produit
 		    ajouterProduit();
+		    // Puis on réinitialise l'input de quantité à 1
+		    quantiteProduit.value = 1;
 		} else { //Si une mauvaise quantité de produits a été entrée, on affiche un message d'erreur
 			erreurQte.style.color = "#ba7894";
 			erreurQte.style.fontWeight = "bold";

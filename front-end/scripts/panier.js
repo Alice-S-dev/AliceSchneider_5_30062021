@@ -1,6 +1,7 @@
+//Récupération du contenu du localStorage
 contenuStorage = JSON.parse(localStorage.getItem("produits"));
 
-//récupération des éléments HTML
+//Récupération des éléments HTML
 let infoPanierVide = document.querySelector(".info-panier-vide"); //
 let btnProduits = document.querySelector(".btn-produits");
 let panier = document.querySelector(".panier"); //
@@ -10,28 +11,43 @@ let panier = document.querySelector(".panier"); //
 //let prixProduit = document.querySelector("#prix-produit");
 //let qteProduit = document.querySelector("#qte-produit");
 //let totalPrixProduit = document.querySelector("#total-produit");
+
 let blocTotal = document.querySelector(".total"); //
 let totalPrixPanier = document.querySelector(".total-panier__prix");//
 let sectionForm = document.querySelector("#formulaire"); //
 
-let prixTableau = []; // Initialisation d'un tableau pour y mettre tous les prix produits du panier
+// Initialisation d'un tableau pour y mettre tous les prix produits du panier
+let prixTableau = []; 
 
+console.log(contenuStorage);
 
-if (contenuStorage === null || contenuStorage.length === 0) { //Si le localStorage est vide, ou si son contenu = 0...
-	//...on masque les éléments de contenu du panier, les éléments de total panier et la section formulaire 
-	panier.style.display = "none";
+// **********  GESTION DU PANIER SELON LE REMPLISSAGE DU LS  **********
+if (contenuStorage === null) { //Si le localStorage est vide...
+	//...on masque les éléments de total panier et la section formulaire 
 	blocTotal.style.display = "none";
 	sectionForm.style.display = "none";
 } else { //Sinon (si le LS est rempli)...
-	//...on masque l'information "panier vide" et le bouton menant aux produits,
+	//...on masque l'information "panier vide" et le bouton renvoyant aux produits,
 	infoPanierVide.style.display = "none";
 	btnProduits.style.display = "none";
+
 	// pour chaque produit du LS... 
 	for(let produit in contenuStorage) {
+	//for(let produit = 0; produit < contenuStorage.length; produit++){	
 		affichPanier(produit); // ...on lance la fonction pour afficher le produit dans le panier
-		// Pour calcul du prix total du panier
-		let prixProduits = contenuStorage[produit].totalProduit; //on récupère le prix total de chaque produit
-		prixTableau.push(prixProduits);
+		modifQte(produit);
+		// Pour calculer le prix total du panier ...
+		let prixProduits = contenuStorage[produit].totalProduit; //...on récupère le prix total de chaque produit
+		prixTableau.push(prixProduits); //on envoie ces prix dans prixTableau
+		
+
+		//***************BAC A SABLE ***************
+
+
+
+
+
+		//************** FIN BAC A SABLE ******************
 	}
  
 	calculPanier();	// Fonction qui calcule le prix total du panier
@@ -39,8 +55,7 @@ if (contenuStorage === null || contenuStorage.length === 0) { //Si le localStora
 	videPanier(); // Fonction qui vide le panier au clic sur un bouton
 }
 
-
-// Gestion de l'affichage de chaque produit dans le panier
+// **********  AFFICHAGE DES PRODUITS DANS LE PANIER ********** 
 function affichPanier(produit) {
 	panier.innerHTML += `
 			<li class="panier-item mb-4">
@@ -67,7 +82,11 @@ function affichPanier(produit) {
 				<div class="panier-item__qte">
 					<div class="panier-item__qte__input">
 						<label for="qte-produit">Quantité: </label>
-						<input type="number" name="qte-produit" id="qte-produit" value="${contenuStorage[produit].quantite}" min="1" max="20">
+						<div class="qte-plus-moins">
+							<button class="qte-moins btn-sm">-</button>
+							<input type="text" name="qte-produit" id="qte-produit" class="qte-produit text-center" value="${contenuStorage[produit].quantite}" min="1" max="20">
+							<button class="qte-plus btn-sm " >+</button>
+						</div>	
 					</div>
 					<div class="panier-item__qte__suppr">
 						<button class="suppr-produit btn-sm">Supprimer</button>
@@ -79,10 +98,12 @@ function affichPanier(produit) {
 				<div class="panier-item__prix-total text-bold">
 					<p id="total-produit" class="m-0">${contenuStorage[produit].totalProduit}€</p>
 				</div>		
-			</li>`
+			</li>`	
 }
 
-// Calcul du prix total du panier
+
+
+// **********  CALCUL DU PRIX TOTAL D'UN PRODUIT  **********
 function calculPanier() { 
 	//on utilise la méthode reduce(), qui va accumuler les différentes valeurs pour n'en faire plus qu'une
 	//ici on veut additionner toutes les valeurs qui sont dans notre prixTableau
@@ -91,28 +112,72 @@ function calculPanier() {
 	totalPrixPanier.innerHTML = resultat + "€"; //on affiche le résultat dans notre élément de total
 }
 
-// Gestion de la suppression d'un produit
+// **********  SUPPRESSION COMPLETE D'UN PRODUIT ********** 
 function supprProduit() {
 	let btnSupprProduit = document.querySelectorAll(".suppr-produit"); // On récupère tous les boutons suppr présents sur la page
-
-	for(let bouton = 0; bouton < btnSupprProduit.length; bouton++){ //pour chaque bouton de notre tableau
-	//on écoute l'évenement du clic sur le bouton de suppression d'un produit
-		btnSupprProduit[bouton].addEventListener("click", (event) => { 
-		event.preventDefault(); //pour éviter le rechargement de la page par défaut au clic sur le bouton
-		// On récupère l'id du produit correspondant au bouton cliqué
-		let suppressionId = contenuStorage[bouton].id; 
-			// On filtre pour ne garder que les produits ne correspondant pas à l'id produit
-		contenuStorage = contenuStorage.filter(item => item.id !== suppressionId);
-		// On remet à jour le LS
-		localStorage.setItem("produits", JSON.stringify(contenuStorage));
-		// On notifie l'utilisateur de la suppression produit, et on recharge la page 
-		alert("Ce produit a bien été supprimé du panier");
-		location.reload();
-		});
-	};	
+	// S'il y a un seul article dans le panier
+	if (contenuStorage.length === 1) { 
+		for(let bouton = 0; bouton < btnSupprProduit.length; bouton++){//pour chaque bouton de notre tableau
+			//on écoute l'évenement du clic sur le bouton de suppression d'un produit
+			btnSupprProduit[bouton].addEventListener("click", (event) => { 
+				event.preventDefault(); //pour éviter le rechargement de la page par défaut au clic sur le bouton
+				localStorage.clear(); //on vide le LS
+				// On notifie l'utilisateur de la suppression produit, et on recharge la page 
+				alert("Ce produit a bien été supprimé du panier");
+				location.reload();
+			});
+		}	
+	// Sinon (s'il y a plus d'un article dans le panier)
+	} else { 
+		for(let bouton = 0; bouton < btnSupprProduit.length; bouton++){ //pour chaque bouton de notre tableau
+			//on écoute l'évenement du clic sur le bouton de suppression d'un produit
+			btnSupprProduit[bouton].addEventListener("click", (event) => { 
+				event.preventDefault(); //pour éviter le rechargement de la page par défaut au clic sur le bouton
+				// On récupère l'id du produit correspondant au bouton cliqué
+				let suppressionId = contenuStorage[bouton].id; 
+					// On filtre pour ne garder que les produits ne correspondant pas à l'id produit
+				contenuStorage = contenuStorage.filter(item => item.id !== suppressionId);
+				// On remet à jour le LS
+				localStorage.setItem("produits", JSON.stringify(contenuStorage));
+				// On notifie l'utilisateur de la suppression produit, et on recharge la page 
+				alert("Ce produit a bien été supprimé du panier");
+				location.reload();
+			});
+		};	
+	}
 }	
 
-// Gestion du vidage du panier
+// **********  MODIFIER LA QUANTITE D'UN ARTICLE AVEC + et -  ********** 
+function modifQte(produit) {
+	let divQtePlusMoins = document.querySelectorAll('.qte-plus-moins');
+	for(let div = 0; div < divQtePlusMoins.length; div++){
+		//console.log(div);
+		let inputQte = divQtePlusMoins[div].querySelector(".qte-produit");
+		//console.log(inputQte);
+// TROUVER COMMENT ENVOYER LA NOUVELLE VALEUR DANS LE LS
+		let btnPlus = divQtePlusMoins[div].querySelector(".qte-plus");
+		//console.log(btnPlus);
+		btnPlus.addEventListener("click", (event) => {
+			event.preventDefault();
+			inputQte.value.innerHTML = inputQte.value++;
+			//let idProduit = contenuStorage[div].id; 
+			console.log(idProduit);
+			//localStorage.setItem("produits", JSON.stringify(contenuStorage));
+			//location.reload();
+		});
+		let btnMoins = divQtePlusMoins[div].querySelector(".qte-moins");
+		//console.log(btnMoins);
+		btnMoins.addEventListener("click", (event) => {
+			event.preventDefault();
+			inputQte.value--;
+			//localStorage.setItem("produits", JSON.stringify(contenuStorage));
+			//location.reload();
+		});	
+	}
+}
+
+
+// **********  VIDER LE PANIER ********** 
 function videPanier() {
 	let btnSupprPanier = document.querySelector("#btn-suppr-panier");
 	btnSupprPanier.addEventListener("click", (event) => { // on écoute l'évenement du clic sur le bouton de suppression panier
@@ -130,14 +195,26 @@ function videPanier() {
 
 
 
-	
+
+// **********  GESTION DU FORMULAIRE **********  
+
+// On récupère les éléments de formulaire
+let inputNom = document.getElementById("lastName");
+let inputPrenom = document.getElementById("firstName");
+let inputAdresse = document.getElementById("address");
+let inputCp = document.getElementById("cp");
+let inputVille = document.getElementById("city");
+let inputTel = document.getElementById("tel");
+let inputEmail = document.getElementById("email");
+
+let checkbox = document.getElementById("checkbox");
+let btnEnvoiForm = document.getElementById("validation");
 
 
 
 
 
 
-	
 
 
 

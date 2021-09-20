@@ -211,9 +211,25 @@ label {
   flex-direction: column;
   align-items: center;
 }
-.blocPanier .panier .panier-item__qte__input input {
-  width: 40px;
-  margin-bottom: 0.5em;
+.blocPanier .panier .panier-item__qte__input .qte-plus-moins {
+  display: flex;
+  align-items: center;
+}
+.blocPanier .panier .panier-item__qte__input .qte-plus-moins .qte-plus, .blocPanier .panier .panier-item__qte__input .qte-plus-moins .qte-moins {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  cursor: pointer;
+}
+.blocPanier .panier .panier-item__qte__input .qte-plus-moins .qte-plus p, .blocPanier .panier .panier-item__qte__input .qte-plus-moins .qte-moins p {
+  margin: 0;
+}
+.blocPanier .panier .panier-item__qte__input .qte-plus-moins input {
+  width: 25px;
+  margin: 0.5em;
 }
 .blocPanier .panier .ligne {
   width: 1px;
