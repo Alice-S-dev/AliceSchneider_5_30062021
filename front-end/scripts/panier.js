@@ -32,73 +32,77 @@ if (contenuStorage === null) { //Si le localStorage est vide...
 	btnProduits.style.display = "none";
 
 	// pour chaque produit du LS... 
-	for(let produit in contenuStorage) {
-	//for(let produit = 0; produit < contenuStorage.length; produit++){	
+
+	contenuStorage.forEach((produit) => {
 		affichPanier(produit); // ...on lance la fonction pour afficher le produit dans le panier
-		modifQte(produit);
+
+		//console.log(produit);
+
+
 		// Pour calculer le prix total du panier ...
-		let prixProduits = contenuStorage[produit].totalProduit; //...on récupère le prix total de chaque produit
+		let prixProduits = produit.totalProduit; //...on récupère le prix total de chaque produit
 		prixTableau.push(prixProduits); //on envoie ces prix dans prixTableau
 		
 
 		//***************BAC A SABLE ***************
+	
+		//let inputQte = produit.quantite;
+		//console.log(inputQte);
 
-
-
-
-
-		//************** FIN BAC A SABLE ******************
-	}
- 
+		//************** FIN BAC A SABLE ******************	
+	});		
 	calculPanier();	// Fonction qui calcule le prix total du panier
-	supprProduit(); // Fonction qui supprime un article du panier au clic sur un bouton
-	videPanier(); // Fonction qui vide le panier au clic sur un bouton
+	supprProduit(); // Fonction pour supprimer un article du panier 
+	qtePlus(); // Fonction pour incrémenter la quantité d'un article du panier
+	qteMoins(); // Fonction pour décrémenter la quantité d'un article du panier
+	modifInput(); 
+	videPanier(); // Fonction pour vider le panier 
 }
 
 // **********  AFFICHAGE DES PRODUITS DANS LE PANIER ********** 
 function affichPanier(produit) {
 	panier.innerHTML += `
-			<li class="panier-item mb-4">
-				<div class="panier-item__img">
-					<a href="produit.html?id=${contenuStorage[produit].id}">
-						<img id="img-produit" src="${contenuStorage[produit].image}" alt="Image du produit - Orinoco">
-					</a>
-				</div>
-
-				<div class="ligne"></div>
-
-				<div class="panier-item__nom">
-					<h2 id="nom-produit" class="m-0">${contenuStorage[produit].nom}</h2>
-				</div>
-
-				<div class="ligne"></div>
-				
-				<div class="panier-item__prix-unit">
-					<p id="prix-produit" class="m-0">${contenuStorage[produit].prix}€</p>
-				</div>
-
-				<div class="ligne"></div>
-
-				<div class="panier-item__qte">
-					<div class="panier-item__qte__input">
-						<label for="qte-produit">Quantité: </label>
-						<div class="qte-plus-moins">
-							<button class="qte-moins btn-sm">-</button>
-							<input type="text" name="qte-produit" id="qte-produit" class="qte-produit text-center" value="${contenuStorage[produit].quantite}" min="1" max="20">
-							<button class="qte-plus btn-sm " >+</button>
-						</div>	
+				<li class="panier-item mb-4">
+					<div class="panier-item__img">
+						<a href="produit.html?id=${produit.id}">
+							<img id="img-produit" src="${produit.image}" alt="Image du produit - Orinoco">
+						</a>
 					</div>
-					<div class="panier-item__qte__suppr">
-						<button class="suppr-produit btn-sm">Supprimer</button>
+
+					<div class="ligne"></div>
+
+					<div class="panier-item__nom">
+						<h2 id="nom-produit" class="m-0">${produit.nom}</h2>
 					</div>
-				</div>
 
-				<div class="ligne"></div>
+					<div class="ligne"></div>
+					
+					<div class="panier-item__prix-unit">
+						<p id="prix-produit" class="m-0">${produit.prix}€</p>
+					</div>
 
-				<div class="panier-item__prix-total text-bold">
-					<p id="total-produit" class="m-0">${contenuStorage[produit].totalProduit}€</p>
-				</div>		
-			</li>`	
+					<div class="ligne"></div>
+
+					<div class="panier-item__qte">
+						<div class="panier-item__qte__input">
+							<label for="qte-produit">Quantité: </label>
+							<div class="qte-plus-moins">
+								<button class="qte-moins btn-sm">-</button>
+								<input type="text" name="qte-produit" id="qte-produit" class="qte-produit text-center" value="${produit.quantite}" min="1" max="20">
+								<button class="qte-plus btn-sm " >+</button>
+							</div>	
+						</div>
+						<div class="panier-item__qte__suppr">
+							<button class="suppr-produit btn-sm">Supprimer</button>
+						</div>
+					</div>
+
+					<div class="ligne"></div>
+
+					<div class="panier-item__prix-total text-bold">
+						<p id="total-produit" class="m-0">${produit.totalProduit}€</p>
+					</div>		
+				</li>`		
 }
 
 
@@ -134,9 +138,9 @@ function supprProduit() {
 			btnSupprProduit[bouton].addEventListener("click", (event) => { 
 				event.preventDefault(); //pour éviter le rechargement de la page par défaut au clic sur le bouton
 				// On récupère l'id du produit correspondant au bouton cliqué
-				let suppressionId = contenuStorage[bouton].id; 
+				let produitId = contenuStorage[bouton].id; 
 					// On filtre pour ne garder que les produits ne correspondant pas à l'id produit
-				contenuStorage = contenuStorage.filter(item => item.id !== suppressionId);
+				contenuStorage = contenuStorage.filter(item => item.id !== produitId);
 				// On remet à jour le LS
 				localStorage.setItem("produits", JSON.stringify(contenuStorage));
 				// On notifie l'utilisateur de la suppression produit, et on recharge la page 
@@ -147,35 +151,90 @@ function supprProduit() {
 	}
 }	
 
-// **********  MODIFIER LA QUANTITE D'UN ARTICLE AVEC + et -  ********** 
-function modifQte(produit) {
-	let divQtePlusMoins = document.querySelectorAll('.qte-plus-moins');
-	for(let div = 0; div < divQtePlusMoins.length; div++){
-		//console.log(div);
-		let inputQte = divQtePlusMoins[div].querySelector(".qte-produit");
-		//console.log(inputQte);
-// TROUVER COMMENT ENVOYER LA NOUVELLE VALEUR DANS LE LS
-		let btnPlus = divQtePlusMoins[div].querySelector(".qte-plus");
-		//console.log(btnPlus);
-		btnPlus.addEventListener("click", (event) => {
-			event.preventDefault();
-			inputQte.value.innerHTML = inputQte.value++;
-			//let idProduit = contenuStorage[div].id; 
-			console.log(idProduit);
-			//localStorage.setItem("produits", JSON.stringify(contenuStorage));
-			//location.reload();
-		});
-		let btnMoins = divQtePlusMoins[div].querySelector(".qte-moins");
-		//console.log(btnMoins);
-		btnMoins.addEventListener("click", (event) => {
-			event.preventDefault();
-			inputQte.value--;
-			//localStorage.setItem("produits", JSON.stringify(contenuStorage));
-			//location.reload();
-		});	
+
+// **********  INCREMENTER DE 1 UN PRODUIT  ********** 
+function qtePlus() {
+	let btnPlus =  document.querySelectorAll(".qte-plus"); // On récupère tous les boutons + présents sur la page
+	for(let plus = 0; plus < btnPlus.length; plus++) { //pour chaque bouton + de notre tableau
+		if (contenuStorage[plus].quantite < 20) {
+			//on écoute l'évenement du clic sur le bouton + d'un produit
+			btnPlus[plus].addEventListener("click", (event) => {
+				event.preventDefault();
+				// On récupère la quantité du produit correspondant au bouton cliqué et on ajoute 1 à la quantité
+				contenuStorage[plus].quantite = parseInt(contenuStorage[plus].quantite) + 1;
+				// On recalcule le prix total du produit
+				contenuStorage[plus].totalProduit = parseInt(contenuStorage[plus].quantite) * parseInt(contenuStorage[plus].prix);
+				//on remet à jour le LS
+				localStorage.setItem("produits", JSON.stringify(contenuStorage));
+				//on recharge la page
+				location.reload();
+			});
+		} else if (contenuStorage[plus].quantite = 20){
+			btnPlus[plus].addEventListener("click", (event) => {
+				event.preventDefault();
+				alert("Vous ne pouvez pas mettre cet article plus de 20 fois dans votre panier.");
+			}); 
+		}	
 	}
 }
 
+// **********  DECREMENTER DE 1 UN PRODUIT  ********** 
+function qteMoins() {
+	let btnMoins =  document.querySelectorAll(".qte-moins"); // On récupère tous les boutons - présents sur la page
+	for(let moins = 0; moins < btnMoins.length; moins++) { //pour chaque bouton - de notre tableau
+		if (contenuStorage[moins].quantite > 1) {
+		//on écoute l'évenement du clic sur le bouton - d'un produit
+			btnMoins[moins].addEventListener("click", (event) => {
+				event.preventDefault();
+				// On récupère la quantité du produit correspondant au bouton cliqué et on soustrait 1 à la quantité
+				contenuStorage[moins].quantite = parseInt(contenuStorage[moins].quantite) - 1;
+				// On recalcule le prix total du produit
+				contenuStorage[moins].totalProduit = parseInt(contenuStorage[moins].quantite) * parseInt(contenuStorage[moins].prix);
+				//on remet à jour le LS
+				localStorage.setItem("produits", JSON.stringify(contenuStorage));
+				//on recharge la page
+				location.reload();
+			});
+		} else if (contenuStorage[moins].quantite = 1){
+			btnMoins[moins].addEventListener("click", (event) => {
+				event.preventDefault();
+				alert("Vous ne pouvez pas choisir une quantité inférieure à 1.");
+			});
+		}	
+	}
+}
+
+// **********  MODIFIER LA QUANTITE VIA L'INPUT ********** 
+function modifInput() {
+	let qteInput = document.querySelectorAll(".qte-produit");
+	for(let i = 0; i < qteInput.length; i++) { // pour chaque input de quantité
+		//On écoute l'évenement blur (perte du focus) sur l'input quantité
+		qteInput[i].addEventListener("blur", () => { 
+			if(qteInput[i].value >=1 && qteInput[i].value <=20) {
+				//On récupère la nouvelle valeur de l'input pour l'attriber au produit correspondant
+				contenuStorage[i].quantite = parseInt(qteInput[i].value);
+				// On recalcule le prix total du produit
+				contenuStorage[i].totalProduit = parseInt(contenuStorage[i].quantite) * parseInt(contenuStorage[i].prix);
+				//on remet à jour le LS
+				localStorage.setItem("produits", JSON.stringify(contenuStorage));
+				//on recharge la page
+				location.reload();
+			} else {
+				alert("La quantité doit être comprise entre 1 et 20 produits.");
+				//On assigne une quantité de 1 au produit
+				contenuStorage[i].quantite = 1;
+				// On recalcule le prix total du produit
+				contenuStorage[i].totalProduit = parseInt(contenuStorage[i].prix);
+				//on remet à jour le LS
+				localStorage.setItem("produits", JSON.stringify(contenuStorage));
+				//on recharge la page
+				location.reload();
+			}
+
+		});
+	}
+} 
+		
 
 // **********  VIDER LE PANIER ********** 
 function videPanier() {
@@ -188,10 +247,6 @@ function videPanier() {
 		location.reload(); 
 	});	
 }
-
-
-
-
 
 
 
@@ -209,10 +264,6 @@ let inputEmail = document.getElementById("email");
 
 let checkbox = document.getElementById("checkbox");
 let btnEnvoiForm = document.getElementById("validation");
-
-
-
-
 
 
 
