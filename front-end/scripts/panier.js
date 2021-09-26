@@ -1,25 +1,16 @@
 //Récupération du contenu du localStorage
 contenuStorage = JSON.parse(localStorage.getItem("produits"));
-
+console.log(contenuStorage);
 //Récupération des éléments HTML
-let infoPanierVide = document.querySelector(".info-panier-vide"); //
+let infoPanierVide = document.querySelector(".info-panier-vide"); 
 let btnProduits = document.querySelector(".btn-produits");
-let panier = document.querySelector(".panier"); //
-//let panierItem = document.querySelector(".panier-item");
-//let imgProduit = document.querySelector("#img-produit");
-//let nomProduit = document.querySelector("#nom-produit");
-//let prixProduit = document.querySelector("#prix-produit");
-//let qteProduit = document.querySelector("#qte-produit");
-//let totalPrixProduit = document.querySelector("#total-produit");
-
-let blocTotal = document.querySelector(".total"); //
-let totalPrixPanier = document.querySelector(".total-panier__prix");//
-let sectionForm = document.querySelector("#formulaire"); //
+let panier = document.querySelector(".panier"); 
+let blocTotal = document.querySelector(".total"); 
+let totalPrixPanier = document.querySelector(".total-panier__prix");
+let sectionForm = document.querySelector("#formulaire"); 
 
 // Initialisation d'un tableau pour y mettre tous les prix produits du panier
-let prixTableau = []; 
-
-console.log(contenuStorage);
+let prixTableau = [];
 
 // **********  GESTION DU PANIER SELON LE REMPLISSAGE DU LS  **********
 if (contenuStorage === null) { //Si le localStorage est vide...
@@ -32,24 +23,11 @@ if (contenuStorage === null) { //Si le localStorage est vide...
 	btnProduits.style.display = "none";
 
 	// pour chaque produit du LS... 
-
 	contenuStorage.forEach((produit) => {
 		affichPanier(produit); // ...on lance la fonction pour afficher le produit dans le panier
-
-		//console.log(produit);
-
-
 		// Pour calculer le prix total du panier ...
 		let prixProduits = produit.totalProduit; //...on récupère le prix total de chaque produit
 		prixTableau.push(prixProduits); //on envoie ces prix dans prixTableau
-		
-
-		//***************BAC A SABLE ***************
-	
-		//let inputQte = produit.quantite;
-		//console.log(inputQte);
-
-		//************** FIN BAC A SABLE ******************	
 	});		
 	calculPanier();	// Fonction qui calcule le prix total du panier
 	supprProduit(); // Fonction pour supprimer un article du panier 
@@ -105,8 +83,6 @@ function affichPanier(produit) {
 				</li>`		
 }
 
-
-
 // **********  CALCUL DU PRIX TOTAL D'UN PRODUIT  **********
 function calculPanier() { 
 	//on utilise la méthode reduce(), qui va accumuler les différentes valeurs pour n'en faire plus qu'une
@@ -150,7 +126,6 @@ function supprProduit() {
 		};	
 	}
 }	
-
 
 // **********  INCREMENTER DE 1 UN PRODUIT  ********** 
 function qtePlus() {
@@ -234,7 +209,6 @@ function modifInput() {
 		});
 	}
 } 
-		
 
 // **********  VIDER LE PANIER ********** 
 function videPanier() {
@@ -263,7 +237,54 @@ let inputTel = document.getElementById("tel");
 let inputEmail = document.getElementById("email");
 
 let checkbox = document.getElementById("checkbox");
-let btnEnvoiForm = document.getElementById("validation");
+let btnValidation = document.getElementById("validation");
+
+// On écoute l'évènement du clic sur le bouton de validation formulaire
+btnValidation.addEventListener("click", (event) => {
+	//Si l'un des champs de formulaire n'est pas rempli...
+	if (!inputNom.value || !inputPrenom.value || !inputAdresse.value || !inputCp.value || !inputVille.value || !inputTel.value || !inputEmail.value || !checkbox.value) {
+		//On affiche un message à l'utilisateur
+		alert("Merci de renseigner tous les champs pour valider le formulaire.");
+	} else { // (si le formulaire est valide)
+		// On récupère les ID des articles du panier
+		articlesId = [];
+		contenuStorage.forEach(item =>
+			articlesId.push(item.id)
+		)
+		// On crée l'objet à envoyer (contact + products)
+		let commandeUtilisateur = {
+			contact: {
+				firstName: inputPrenom.value,
+				lastName: inputNom.value,
+				address: inputAdresse.value,
+				city: inputVille.value,
+				email: inputEmail.value
+			},
+			products: articlesId
+		};
+		//On prépare les options d'envoi au back-end 
+		const fetchOptions = {
+			method : "POST", // On choisit la méthode POST pour envoyer les données
+			headers : {"Content-Type": "application/json"}, // L'objet envoyé sera au format JSON
+			body : JSON.stringify(commandeUtilisateur) // On convertit notre objet order en string pour l'envoyer
+		};
+		//On lance la requete fetch
+		fetch("http://localhost:3000/api/furniture/order", fetchOptions)
+			.then((response) => response.json())
+			.then((data) => {
+				localStorage.clear(); // On vide le LS (qui contient les produits du panier)
+				localStorage.setItem("idOrder", JSON.stringify(data.orderId)) //On stocke l'orderId dans le LS
+				localStorage.setItem("order", JSON.stringify(commandeUtilisateur)) // On stocke les infos de la commande dans les LS
+				alert('Commande effectuée avec succès!'); 
+				window.location.href = "confirmation.html";	
+			})
+			.catch((erreur) => {
+				alert('erreur!!!!');
+			})
+
+	}	
+})
+
 
 
 
