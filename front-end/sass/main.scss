@@ -1,12 +1,20 @@
 /* ----------SOMMAIRE---------- */
 
-/* L		- 1 - */
-/* L		- 2 - */
-/* L		- 3 - */
+/* Elements généraux	- L 18 - */
+/* Header-navigation	- L 89 - */
+/* Présentation des produits (page index)	- L 123 - */
+/* Page produit	- L 154 - */
+/* Page Panier	- L 178 - */
+/* Footer	- L 325 - */
+/* MEDIA QUERIES	- L 362 - */
+		/* Produit	- L 365 - */
+		/* Panier	- L 375 & 412- */
+		/* Footer	- L 398 - */
 
 
 
-/* VARIABLES */
+/****** VARIABLES ******/
+
 $color1: #ba7894; 
 $color2: #8e5bfb;
 $color3: #F1ECF0;
@@ -14,12 +22,7 @@ $color4: #c77960;
 $color5: #f4e6d9;
 
 
-/* MIXINS */
-
-/* KEYFRAMES */ 
-
-/* ELEMENTS GENERAUX */
-
+/****** ELEMENTS GENERAUX ******/
 
 .page__entiere{
 	padding:  0;
@@ -82,8 +85,7 @@ label {
 }
 
 
-
-/* HEADER - NAVIGATION */
+/****** HEADER - NAVIGATION ******/
 
 .navbar {
 	padding : 0;
@@ -109,7 +111,6 @@ label {
 	}
 }
 
-
 .banniere {
 	background-color: $color5; 
 	&__presentation {
@@ -118,7 +119,7 @@ label {
 }
 
 
-/********* PAGE PRESENTATION DES PRODUITS (INDEX) ***********/
+/****** PAGE PRESENTATION DES PRODUITS (INDEX) ******/
 
 .articles {
 	display: flex;
@@ -149,7 +150,8 @@ label {
 }
 
 
-/********* PAGE PRODUIT ***********/
+/******PAGE PRODUIT ******/
+
 .prix-produit {
 	font-style : italic;
 	font-size: 2rem;
@@ -172,9 +174,7 @@ label {
 }	
 
 
-
-
-/*********  PAGE PANIER *********/
+/******  PAGE PANIER ******/
 
 .blocPanier {
 	width: 90%;
@@ -289,7 +289,6 @@ label {
 		}	
 
 	}
-
 	form {
 		fieldset {
 			border: 2px groove $color1;
@@ -302,6 +301,12 @@ label {
 		}
 		#mlle, #mr {
 			margin-left: 2em;
+		}
+		#lastName:invalid, #firstName:invalid, #address:invalid, #cp:invalid, #city:invalid, #tel:invalid, #email:invalid, #checkbox:invalid {
+			box-shadow: 0 0 5px red;
+		}
+		#lastName:valid, #firstName:valid, #address:valid, #cp:valid, #city:valid, #tel:valid, #email:valid, #checkbox:valid {
+			box-shadow: 0 0 5px green;
 		}
 	}
 	#validation, #checkbox, button {
@@ -316,12 +321,7 @@ label {
 }
 
 
-
-
-
-
-
-/* FOOTER */
+/****** FOOTER ******/
 
 .footer {
 	padding: 10px 10%;
@@ -357,14 +357,12 @@ label {
 	}
 }
 
-    
 
-/* MEDIA QUERIES */
+/****** MEDIA QUERIES ******/
 
 @media screen and (min-width: 768px) 	/* min-width= taille iPad  */ {
-
-	/* Produit */
 	
+	/* Page produit */
 	.prixProduit .divImage {
 		height: 600px;
 		&__img {
@@ -373,8 +371,7 @@ label {
 		}
 	}
 
-
-	/* Panier */
+	/* Page panier */
 	.blocPanier{
 		.total {
 			height: 100px;
@@ -397,10 +394,9 @@ label {
 	.nomPrenom, .cpVille {
 		display: flex;
 	}
+	
 	/* Footer */
-	
 			/* Le footer est organisé en 3 colonnes au lieu de 3 blocs les uns au dessus des autres  */
-	
 	.footer {
 		& nav {
 			display: flex;
@@ -412,10 +408,10 @@ label {
 		}
 	}
 } 
+
 @media screen and (min-width: 1030px) {
 
 	/* Panier */
-	
 	.blocPanier {
 		width: 50%;
 	}

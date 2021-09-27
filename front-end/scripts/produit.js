@@ -2,7 +2,7 @@
 let params = new URLSearchParams(location.search);
 let id = params.get('id'); // on récupère la chaine de caractère correspondant à l'ID du produit
 
-//variables pour récupération des éléments HTML
+//Récupération des éléments du DOM
 let nomProduit = document.querySelector(".nom-produit");
 let prixProduit = document.querySelector(".prix-produit");
 let image = document.querySelector(".div-image__img");
@@ -13,7 +13,7 @@ let bouton = document.querySelector(".bouton-ajout");
 let messagePanier = document.querySelector('#message-panier');
 let erreurQte = document.querySelector('#erreur-quantite');
 
-//récupérer l'article
+// **********  RECUPERATION DE L'ARTICLE VIA L'API  **********
 fetch('http://localhost:3000/api/furniture/' + id)
 	.then(response => response.json())
 	.catch((erreur) => {	 //affichage d'un message en cas d'erreur
@@ -26,7 +26,7 @@ fetch('http://localhost:3000/api/furniture/' + id)
 		console.log(produit);
 	})
 
-//Fonction d'affichage des informations sur le produit
+// **********  AFFICHAGE DES INFOS PRODUIT  **********
 function affichProduit(produit) {
 	nomProduit.innerHTML = produit.name; //Affichage du nom du produit
 	prixProduit.innerHTML = produit.price / 100 + " €"; //Affichage du prix du produit
@@ -41,6 +41,7 @@ function affichProduit(produit) {
 	}		
 }
 
+// **********  GESTION DU BOUTON D'AJOUT AU PANIER  **********
 function btnClick() {
 	//On écoute l'évènement du clic sur le bouton d'ajout au panier
   	bouton.addEventListener("click", () => {
@@ -61,6 +62,7 @@ function btnClick() {
 }
 btnClick()
 
+// **********  FONCTION D'AJOUT D'UN PRODUIT DANS LE LOCAL STORAGE (pour récupérer dans le panier) **********
 function ajouterProduit() {
 	// On crée le produit à ajouter
     let produitAjoute = {

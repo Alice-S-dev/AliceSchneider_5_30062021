@@ -241,10 +241,10 @@ let btnValidation = document.getElementById("validation");
 
 // On écoute l'évènement du clic sur le bouton de validation formulaire
 btnValidation.addEventListener("click", (event) => {
-	//Si l'un des champs de formulaire n'est pas rempli...
-	if (!inputNom.value || !inputPrenom.value || !inputAdresse.value || !inputCp.value || !inputVille.value || !inputTel.value || !inputEmail.value || !checkbox.value) {
+	//Si l'un des champs de formulaire n'est pas valide...
+	if (inputNom.validity.patternMismatch || inputPrenom.validity.patternMismatch || inputAdresse.validity.patternMismatch || inputCp.validity.patternMismatch || inputVille.validity.patternMismatch || inputTel.validity.patternMismatch || inputEmail.validity.patternMismatch || !checkbox.checked) {	
 		//On affiche un message à l'utilisateur
-		alert("Merci de renseigner tous les champs pour valider le formulaire.");
+		alert("Merci de renseigner correctement tous les champs pour valider le formulaire.");
 	} else { // (si le formulaire est valide)
 		// On récupère les ID des articles du panier
 		articlesId = [];
@@ -281,7 +281,6 @@ btnValidation.addEventListener("click", (event) => {
 			.catch((erreur) => {
 				alert('erreur!!!!');
 			})
-
 	}	
 })
 

@@ -1,12 +1,17 @@
 @charset "UTF-8";
 /* ----------SOMMAIRE---------- */
-/* L		- 1 - */
-/* L		- 2 - */
-/* L		- 3 - */
-/* VARIABLES */
-/* MIXINS */
-/* KEYFRAMES */
-/* ELEMENTS GENERAUX */
+/* Elements généraux	- L 18 - */
+/* Header-navigation	- L 89 - */
+/* Présentation des produits (page index)	- L 123 - */
+/* Page produit	- L 154 - */
+/* Page Panier	- L 178 - */
+/* Footer	- L 325 - */
+/* MEDIA QUERIES	- L 362 - */
+/* Produit	- L 365 - */
+/* Panier	- L 375 & 412- */
+/* Footer	- L 398 - */
+/****** VARIABLES ******/
+/****** ELEMENTS GENERAUX ******/
 .page__entiere {
   padding: 0;
   max-width: 3000px;
@@ -66,7 +71,7 @@ label {
   font-weight: bold;
 }
 
-/* HEADER - NAVIGATION */
+/****** HEADER - NAVIGATION ******/
 .navbar {
   padding: 0;
 }
@@ -98,7 +103,7 @@ label {
   padding: 90px 5%;
 }
 
-/********* PAGE PRESENTATION DES PRODUITS (INDEX) ***********/
+/****** PAGE PRESENTATION DES PRODUITS (INDEX) ******/
 .articles {
   display: flex;
   flex-wrap: wrap;
@@ -127,7 +132,7 @@ label {
   font-style: italic;
 }
 
-/********* PAGE PRODUIT ***********/
+/******PAGE PRODUIT ******/
 .prix-produit {
   font-style: italic;
   font-size: 2rem;
@@ -149,7 +154,7 @@ label {
   justify-content: space-around;
 }
 
-/*********  PAGE PANIER *********/
+/******  PAGE PANIER ******/
 .blocPanier {
   width: 90%;
   margin: auto;
@@ -274,6 +279,12 @@ label {
 .blocPanier form #mlle, .blocPanier form #mr {
   margin-left: 2em;
 }
+.blocPanier form #lastName:invalid, .blocPanier form #firstName:invalid, .blocPanier form #address:invalid, .blocPanier form #cp:invalid, .blocPanier form #city:invalid, .blocPanier form #tel:invalid, .blocPanier form #email:invalid, .blocPanier form #checkbox:invalid {
+  box-shadow: 0 0 5px red;
+}
+.blocPanier form #lastName:valid, .blocPanier form #firstName:valid, .blocPanier form #address:valid, .blocPanier form #cp:valid, .blocPanier form #city:valid, .blocPanier form #tel:valid, .blocPanier form #email:valid, .blocPanier form #checkbox:valid {
+  box-shadow: 0 0 5px green;
+}
 .blocPanier #validation, .blocPanier #checkbox, .blocPanier button {
   cursor: pointer;
 }
@@ -284,7 +295,7 @@ label {
   margin-top: 2em;
 }
 
-/* FOOTER */
+/****** FOOTER ******/
 .footer {
   padding: 10px 10%;
   background: #F1ECF0;
@@ -317,9 +328,9 @@ label {
   margin-bottom: 1em;
 }
 
-/* MEDIA QUERIES */
+/****** MEDIA QUERIES ******/
 @media screen and (min-width: 768px) {
-  /* Produit */
+  /* Page produit */
   .prixProduit .divImage {
     height: 600px;
   }
@@ -328,7 +339,7 @@ label {
     object-fit: contain;
   }
 
-  /* Panier */
+  /* Page panier */
   .blocPanier .total {
     height: 100px;
     flex-wrap: nowrap;

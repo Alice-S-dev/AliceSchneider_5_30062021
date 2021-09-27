@@ -1,6 +1,6 @@
 
 
-//Récupérer tous les produits depuis l'API
+// **********  RECUPERER TOUS LES PRODUITS DEPUIS L'API  **********
 fetch("http://localhost:3000/api/furniture")
 	.then(response => response.json())
 	.then(meublesAPI => {
@@ -40,7 +40,6 @@ fetch("http://localhost:3000/api/furniture")
 			infosArticle.appendChild(prixArticle);
 			prixArticle.innerHTML = meublesAPI[produit].price / 100 + " €"; //affichage du prix des produits, converti en euros
 
-
 			//Création d'un bouton "voir le produit" à la fin de chaque carte
 			let bouton = document.createElement("button");
 			bouton.className = 'btn-sm';
@@ -51,7 +50,6 @@ fetch("http://localhost:3000/api/furniture")
 			lienArticle.appendChild(bouton);
 		}
 	})
-
 	//affichage d'un message en cas d'erreur
 	.catch((erreur) => {	 
 	 		let affichErreur = document.querySelector("#erreur");

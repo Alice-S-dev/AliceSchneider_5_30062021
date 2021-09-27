@@ -11,7 +11,7 @@ let boutonAccueil = document.querySelector(".bouton-accueil");
 nomUtilisateur.innerHTML = `Merci ${infosCommandeStorage.contact.firstName},`;
 idCommande.innerHTML = idCommandeStorage;
 
-//Au clic sur le bouton de retour
+//Gestion du clic sur le bouton de retour
 boutonAccueil.addEventListener("click", (event) => {
 	event.preventDefault();
 	localStorage.clear(); // on vide le LS

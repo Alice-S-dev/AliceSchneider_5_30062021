@@ -63,12 +63,12 @@
 		<main>
 			<!-- bloc 1 - Produit sélectionné -->
 			<section>
-				<h1 class="text-center nom-produit"></h1>
+				<h1 class="text-center nom-produit">Produit</h1>
 				<p class="text-center prix-produit"></p>
 
 				<div class="card">
 					<div class="div-image mb-3">
-						<img src="" alt="Meuble de qualité proposé par Orinoco" class="div-image__img card-img-top">
+						<img src="produit" alt="Meuble de qualité proposé par Orinoco" class="div-image__img card-img-top">
 					</div>
 
 					<div class="infos-produit m-3 pb-4">
@@ -96,18 +96,14 @@
 				
 				<!-- Boutons bas de page -->
 				<div class="boutonsLiens">
-					<button class="lien-retour">
-						<a href="index.html">
+					<button class="lien-retour" onclick="window.location.href = 'index.html';">
 							<i class="fas fa-reply"></i> 
 							Tous les produits
-						</a>
 					</button>
 
-					<button class="lien-panier">
-						<a href="panier.html">
+					<button class="lien-panier" onclick="window.location.href = 'panier.html';">
 							<i class="fas fa-shopping-cart"></i>
 							Mon panier
-						</a>
 					</button>
 				</div>
 
