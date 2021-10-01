@@ -2,12 +2,12 @@
 contenuStorage = JSON.parse(localStorage.getItem("produits"));
 console.log(contenuStorage);
 //Récupération des éléments HTML
-let infoPanierVide = document.querySelector(".info-panier-vide"); 
-let btnProduits = document.querySelector(".btn-produits");
-let panier = document.querySelector(".panier"); 
-let blocTotal = document.querySelector(".total"); 
-let totalPrixPanier = document.querySelector(".total-panier__prix");
-let sectionForm = document.querySelector("#formulaire"); 
+const infoPanierVide = document.querySelector(".info-panier-vide"); 
+const btnProduits = document.querySelector(".btn-produits");
+const panier = document.querySelector(".panier"); 
+const blocTotal = document.querySelector(".total"); 
+const totalPrixPanier = document.querySelector(".total-panier__prix");
+const sectionForm = document.querySelector("#formulaire"); 
 
 // Initialisation d'un tableau pour y mettre tous les prix produits du panier
 let prixTableau = [];
@@ -28,12 +28,11 @@ if (contenuStorage === null) { //Si le localStorage est vide...
 		// Pour calculer le prix total du panier ...
 		let prixProduits = produit.totalProduit; //...on récupère le prix total de chaque produit
 		prixTableau.push(prixProduits); //on envoie ces prix dans prixTableau
-	});		
-	calculPanier();	// Fonction qui calcule le prix total du panier
+	});
 	supprProduit(); // Fonction pour supprimer un article du panier 
 	qtePlus(); // Fonction pour incrémenter la quantité d'un article du panier
 	qteMoins(); // Fonction pour décrémenter la quantité d'un article du panier
-	modifInput(); 
+	modifInput(); //Fonction pour modifier un input en entrée directe
 	videPanier(); // Fonction pour vider le panier 
 }
 
@@ -83,18 +82,17 @@ function affichPanier(produit) {
 				</li>`		
 }
 
+
 // **********  CALCUL DU PRIX TOTAL D'UN PRODUIT  **********
-function calculPanier() { 
-	//on utilise la méthode reduce(), qui va accumuler les différentes valeurs pour n'en faire plus qu'une
-	//ici on veut additionner toutes les valeurs qui sont dans notre prixTableau
-	let reducteur = (accumulateur, valeur) => accumulateur + valeur; 
-	let resultat = (prixTableau.reduce(reducteur, 0)); // On ajoute une valeur initiale de 0 pour eviter l'erreur si le tableau est vide
-	totalPrixPanier.innerHTML = resultat + "€"; //on affiche le résultat dans notre élément de total
-}
+	//on utilise la méthode reduce(), qui va accumuler les différentes valeurs pour n'en faire plus qu'une	
+const reducteur = (accumulateur, valeur) => accumulateur + valeur; //ici on veut additionner toutes les valeurs qui sont dans notre prixTableau
+const resultat = (prixTableau.reduce(reducteur, 0)); // On ajoute une valeur initiale de 0 pour eviter l'erreur si le tableau est vide
+totalPrixPanier.innerHTML = resultat + "€";	//on affiche le résultat dans notre élément de total
+
 
 // **********  SUPPRESSION COMPLETE D'UN PRODUIT ********** 
 function supprProduit() {
-	let btnSupprProduit = document.querySelectorAll(".suppr-produit"); // On récupère tous les boutons suppr présents sur la page
+	const btnSupprProduit = document.querySelectorAll(".suppr-produit"); // On récupère tous les boutons suppr présents sur la page
 	// S'il y a un seul article dans le panier
 	if (contenuStorage.length === 1) { 
 		for(let bouton = 0; bouton < btnSupprProduit.length; bouton++){//pour chaque bouton de notre tableau
@@ -114,7 +112,7 @@ function supprProduit() {
 			btnSupprProduit[bouton].addEventListener("click", (event) => { 
 				event.preventDefault(); //pour éviter le rechargement de la page par défaut au clic sur le bouton
 				// On récupère l'id du produit correspondant au bouton cliqué
-				let produitId = contenuStorage[bouton].id; 
+				const produitId = contenuStorage[bouton].id; 
 					// On filtre pour ne garder que les produits ne correspondant pas à l'id produit
 				contenuStorage = contenuStorage.filter(item => item.id !== produitId);
 				// On remet à jour le LS
@@ -129,7 +127,7 @@ function supprProduit() {
 
 // **********  INCREMENTER DE 1 UN PRODUIT  ********** 
 function qtePlus() {
-	let btnPlus =  document.querySelectorAll(".qte-plus"); // On récupère tous les boutons + présents sur la page
+	const btnPlus =  document.querySelectorAll(".qte-plus"); // On récupère tous les boutons + présents sur la page
 	for(let plus = 0; plus < btnPlus.length; plus++) { //pour chaque bouton + de notre tableau
 		if (contenuStorage[plus].quantite < 20) {
 			//on écoute l'évenement du clic sur le bouton + d'un produit
@@ -155,7 +153,7 @@ function qtePlus() {
 
 // **********  DECREMENTER DE 1 UN PRODUIT  ********** 
 function qteMoins() {
-	let btnMoins =  document.querySelectorAll(".qte-moins"); // On récupère tous les boutons - présents sur la page
+	const btnMoins =  document.querySelectorAll(".qte-moins"); // On récupère tous les boutons - présents sur la page
 	for(let moins = 0; moins < btnMoins.length; moins++) { //pour chaque bouton - de notre tableau
 		if (contenuStorage[moins].quantite > 1) {
 		//on écoute l'évenement du clic sur le bouton - d'un produit
@@ -181,7 +179,7 @@ function qteMoins() {
 
 // **********  MODIFIER LA QUANTITE VIA L'INPUT ********** 
 function modifInput() {
-	let qteInput = document.querySelectorAll(".qte-produit");
+	const qteInput = document.querySelectorAll(".qte-produit");
 	for(let i = 0; i < qteInput.length; i++) { // pour chaque input de quantité
 		//On écoute l'évenement blur (perte du focus) sur l'input quantité
 		qteInput[i].addEventListener("blur", () => { 
@@ -212,7 +210,7 @@ function modifInput() {
 
 // **********  VIDER LE PANIER ********** 
 function videPanier() {
-	let btnSupprPanier = document.querySelector("#btn-suppr-panier");
+	const btnSupprPanier = document.querySelector("#btn-suppr-panier");
 	btnSupprPanier.addEventListener("click", (event) => { // on écoute l'évenement du clic sur le bouton de suppression panier
 		event.preventDefault();
 		localStorage.clear(); // on vide le LS
@@ -228,31 +226,32 @@ function videPanier() {
 // **********  GESTION DU FORMULAIRE **********  
 
 // On récupère les éléments de formulaire
-let inputNom = document.getElementById("lastName");
-let inputPrenom = document.getElementById("firstName");
-let inputAdresse = document.getElementById("address");
-let inputCp = document.getElementById("cp");
-let inputVille = document.getElementById("city");
-let inputTel = document.getElementById("tel");
-let inputEmail = document.getElementById("email");
+const inputNom = document.getElementById("lastName");
+const inputPrenom = document.getElementById("firstName");
+const inputAdresse = document.getElementById("address");
+const inputCp = document.getElementById("cp");
+const inputVille = document.getElementById("city");
+const inputTel = document.getElementById("tel");
+const inputEmail = document.getElementById("email");
 
-let checkbox = document.getElementById("checkbox");
-let btnValidation = document.getElementById("validation");
+const checkbox = document.getElementById("checkbox");
+const btnValidation = document.getElementById("validation");
 
 // On écoute l'évènement du clic sur le bouton de validation formulaire
 btnValidation.addEventListener("click", (event) => {
+	event.preventDefault();
 	//Si l'un des champs de formulaire n'est pas valide...
-	if (inputNom.validity.patternMismatch || inputPrenom.validity.patternMismatch || inputAdresse.validity.patternMismatch || inputCp.validity.patternMismatch || inputVille.validity.patternMismatch || inputTel.validity.patternMismatch || inputEmail.validity.patternMismatch || !checkbox.checked) {	
+	if (inputNom.validity.patternMismatch || inputPrenom.validity.patternMismatch || inputAdresse.validity.patternMismatch || inputCp.validity.patternMismatch || inputVille.validity.patternMismatch || inputTel.validity.patternMismatch || inputEmail.validity.typeMismatch || !checkbox.checked) {	
 		//On affiche un message à l'utilisateur
 		alert("Merci de renseigner correctement tous les champs pour valider le formulaire.");
 	} else { // (si le formulaire est valide)
 		// On récupère les ID des articles du panier
-		articlesId = [];
+		let articlesId = [];
 		contenuStorage.forEach(item =>
 			articlesId.push(item.id)
 		)
 		// On crée l'objet à envoyer (contact + products)
-		let commandeUtilisateur = {
+		const commandeUtilisateur = {
 			contact: {
 				firstName: inputPrenom.value,
 				lastName: inputNom.value,
@@ -272,14 +271,15 @@ btnValidation.addEventListener("click", (event) => {
 		fetch("http://localhost:3000/api/furniture/order", fetchOptions)
 			.then((response) => response.json())
 			.then((data) => {
-				localStorage.clear(); // On vide le LS (qui contient les produits du panier)
-				localStorage.setItem("idOrder", JSON.stringify(data.orderId)) //On stocke l'orderId dans le LS
-				localStorage.setItem("order", JSON.stringify(commandeUtilisateur)) // On stocke les infos de la commande dans les LS
+				localStorage.clear(); // on efface les produits du LS
+				sessionStorage.setItem("idCommande", JSON.stringify(data.orderId)); //On stocke l'orderId dans le LS
+				sessionStorage.setItem("commande", JSON.stringify(commandeUtilisateur)); // On stocke les infos de la commande dans les LS
+				sessionStorage.setItem("prixCommande", JSON.stringify(resultat));
 				alert('Commande effectuée avec succès!'); 
 				window.location.href = "confirmation.html";	
 			})
 			.catch((erreur) => {
-				alert('erreur!!!!');
+				alert('Erreur!');
 			})
 	}	
 })
