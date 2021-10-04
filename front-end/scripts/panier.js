@@ -193,7 +193,7 @@ function modifInput() {
 				//on recharge la page
 				location.reload();
 			} else {
-				alert("La quantité doit être comprise entre 1 et 20 produits.");
+				alert("Vous devez entrer un chiffre entre 1 et 20 (quantité maxi. : 20 produits)");
 				//On assigne une quantité de 1 au produit
 				contenuStorage[i].quantite = 1;
 				// On recalcule le prix total du produit
@@ -203,7 +203,6 @@ function modifInput() {
 				//on recharge la page
 				location.reload();
 			}
-
 		});
 	}
 } 

@@ -86,16 +86,16 @@ function ajouterProduit() {
     	let produitExistant = tableauProduits.find(item => item.id === id);
     	if(produitExistant) {
     		tableauProduits = tableauProduits.map(function(item) {	//on regarde chaque item du tableau
-    			if(item.id === id) { // Si l'objet est déjà existant dans le LS (on compare les ID)
+    			if(item.id === id && item.quantite < 20) { // Si l'objet est déjà existant dans le LS (on compare les ID) et si il a une quantité < 20
     				//On change la quantité et le prix total de cet objet
     				item.quantite = parseInt(item.quantite) + parseInt(quantiteProduit.value);
     				item.totalProduit = parseInt(item.prix) * parseInt(item.quantite);
-    			}
+    			} 
     			return item;
     		});
     		localStorage.setItem("produits", JSON.stringify(tableauProduits));
     	} else {// Si le produit n'est pas déjà présent dans le LS (ID)
-    		// On ajouteun nouvel objet dans le LS  
+    		// On ajoute un nouvel objet dans le LS  
     		tableauProduits.push(produitAjoute);
     		localStorage.setItem("produits", JSON.stringify(tableauProduits));
     	}

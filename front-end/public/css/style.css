@@ -107,6 +107,7 @@ label {
 .articles {
   display: flex;
   flex-wrap: wrap;
+  justify-content: space-around;
 }
 .articles .card {
   width: 18rem;
