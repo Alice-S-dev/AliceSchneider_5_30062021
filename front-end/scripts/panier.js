@@ -240,7 +240,7 @@ const btnValidation = document.getElementById("validation");
 btnValidation.addEventListener("click", (event) => {
 	event.preventDefault();
 	//Si l'un des champs de formulaire n'est pas valide...
-	if (inputNom.validity.patternMismatch || inputPrenom.validity.patternMismatch || inputAdresse.validity.patternMismatch || inputCp.validity.patternMismatch || inputVille.validity.patternMismatch || inputTel.validity.patternMismatch || inputEmail.validity.typeMismatch || !checkbox.checked) {	
+	if (inputNom.validity.patternMismatch || inputPrenom.validity.patternMismatch || inputAdresse.validity.patternMismatch || inputCp.validity.patternMismatch || inputVille.validity.patternMismatch || inputTel.validity.patternMismatch || inputEmail.validity.patternMismatch || !checkbox.checked) {	
 		//On affiche un message à l'utilisateur
 		alert("Merci de renseigner correctement tous les champs pour valider le formulaire.");
 	} else { // (si le formulaire est valide)
@@ -271,9 +271,9 @@ btnValidation.addEventListener("click", (event) => {
 			.then((response) => response.json())
 			.then((data) => {
 				localStorage.clear(); // on efface les produits du LS
-				sessionStorage.setItem("idCommande", JSON.stringify(data.orderId)); //On stocke l'orderId dans le LS
-				sessionStorage.setItem("commande", JSON.stringify(commandeUtilisateur)); // On stocke les infos de la commande dans les LS
-				sessionStorage.setItem("prixCommande", JSON.stringify(resultat));
+				sessionStorage.setItem("idCommande", JSON.stringify(data.orderId)); //On stocke l'orderId dans le sessionStorage
+				sessionStorage.setItem("commande", JSON.stringify(commandeUtilisateur)); // On stocke les infos commande dans le session storage
+				sessionStorage.setItem("prixCommande", JSON.stringify(resultat)); // On stocke le prix commande dans le session storage
 				alert('Commande effectuée avec succès!'); 
 				window.location.href = "confirmation.html";	
 			})

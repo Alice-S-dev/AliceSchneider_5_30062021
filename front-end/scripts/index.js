@@ -2,8 +2,8 @@
 
 // **********  RECUPERER TOUS LES PRODUITS DEPUIS L'API  **********
 fetch("http://localhost:3000/api/furniture")
-	.then(response => response.json())
-	.then(meublesAPI => {
+.then(response => response.json())
+.then(meublesAPI => {
 		//récupérer et afficher les données de chaque produit
 		for(let produit in meublesAPI) { //pour chaque produit
 			const articlesDispo = document.querySelector(".articles"); //je récupère l'id de la div qui contiendra tous les produits
@@ -52,8 +52,8 @@ fetch("http://localhost:3000/api/furniture")
 	})
 	//affichage d'un message en cas d'erreur
 	.catch((erreur) => {	 
-	 		const affichErreur = document.querySelector("#erreur");
-	 		affichErreur.innerHTML = "Les informations demandées n'ont pas pu être affichées. <br> Veuillez vérifier que le serveur local est bien lancé (port 3000).";
-	 		affichErreur.style.color = "#ba7894";
-		})
+		const affichErreur = document.querySelector("#erreur");
+		affichErreur.innerHTML = "Les informations demandées n'ont pas pu être affichées. <br> Veuillez vérifier que le serveur local est bien lancé (port 3000).";
+		affichErreur.style.color = "#ba7894";
+	})
 

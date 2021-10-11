@@ -1,4 +1,4 @@
-//Récupération du contenu du localStorage
+//Récupération du contenu du sessionStorage
 const idCommandeStorage = JSON.parse(sessionStorage.getItem("idCommande"));
 const infosCommandeStorage = JSON.parse(sessionStorage.getItem("commande"));
 const prixCommandeStorage = JSON.parse(sessionStorage.getItem("prixCommande"));
